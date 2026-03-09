@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI For African Business — Leonard Nvene</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── ROOT & RESET ──────────────────────────────────────────────────────── */
+:root {
+  --black:   #05060A;
+  --dark:    #0A0C12;
+  --card:    #0E1018;
+  --border:  rgba(255,255,255,0.07);
+
+  --cyan:    #00D4FF;
+  --cyan-d:  #0097BB;
+  --gold:    #D4A843;
+  --gold-l:  #F5C842;
+  --gold-d:  #8B6914;
+  --purple:  #A855F7;
+  --purple-d:#6C3483;
+
+  /* NEW THEME COLOURS */
+  --yellow:  #F5C842;
+  --yellow-d:#C9960A;
+  --yellow-dk:#7A5C00;
+  --red:     #E53935;
+  --red-d:   #B71C1C;
+  --red-l:   #FF6B6B;
+  --blue:    #1565C0;
+  --blue-l:  #42A5F5;
+  --blue-d:  #0D3A7A;
+
+  --white:   #FFFFFF;
+  --gray:    #888899;
+  --lgray:   #555566;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE OVERLAY ─────────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── SCROLLBAR ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--gold-d); border-radius:3px; }
+
+/* ── AURORA HERO BACKGROUND ────────────────────────────────────────────── */
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+.aurora-1 { width:600px; height:600px; background:rgba(0,151,187,0.18); top:-200px; left:-100px; }
+.aurora-2 { width:500px; height:500px; background:rgba(212,168,67,0.12); top:100px; right:-100px; }
+.aurora-3 { width:400px; height:400px; background:rgba(108,52,131,0.12); top:400px; left:30%; }
+
+/* ── HERO SECTION ──────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 24px 80px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-eyebrow {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.1s forwards;
+}
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(52px, 8vw, 100px);
+  line-height: 1.0;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.25s forwards;
+}
+
+.hero h1 .line-white { color: var(--white); display: block; }
+.hero h1 .line-gold  { color: var(--gold);  display: block; }
+.hero h1 .line-cyan  { color: var(--cyan);  display: block; }
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--gray);
+  max-width: 560px;
+  line-height: 1.7;
+  margin: 28px auto 0;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.4s forwards;
+}
+
+.hero-slogan {
+  margin-top: 48px;
+  max-width: 640px;
+  border-left: 3px solid var(--gold);
+  padding: 18px 24px;
+  text-align: left;
+  background: rgba(212,168,67,0.05);
+  border-radius: 0 8px 8px 0;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.55s forwards;
+}
+
+.hero-slogan p {
+  font-family: 'DM Sans', sans-serif;
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+}
+
+.hero-slogan p strong { color: var(--gold); font-style: normal; }
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 56px;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeUp 0.7s ease 0.7s forwards;
+}
+
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--white);
+}
+.stat-num span { color: var(--gold); }
+.stat-label { font-size: 12px; color: var(--lgray); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+
+.hero-arrow {
+  margin-top: 64px;
+  font-size: 24px;
+  color: var(--lgray);
+  animation: bounce 2s infinite;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── SECTION COMMONS ───────────────────────────────────────────────────── */
+section { position: relative; z-index: 1; }
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--gold);
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.section-desc {
+  font-size: 16px;
+  color: var(--gray);
+  text-align: center;
+  max-width: 540px;
+  margin: 0 auto 64px;
+  line-height: 1.7;
+}
+
+/* ── WHAT YOU GET STRIP ────────────────────────────────────────────────── */
+.features-strip {
+  padding: 80px 24px;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,0.01);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feature-icon {
+  font-size: 28px;
+  margin-bottom: 4px;
+}
+
+.feature-item h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.feature-item p {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* ── PRICING / CTA SECTION ─────────────────────────────────────────────── */
+.pricing {
+  padding: 100px 24px;
+  position: relative;
+}
+
+.pricing::before {
+  content: '';
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,168,67,0.06), transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.tier-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  max-width: 1060px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+/* ── TIER CARD BASE ────────────────────────────────────────────────────── */
+.tier-card {
+  border-radius: 20px;
+  padding: 36px 30px 30px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+.tier-card:hover {
+  transform: translateY(-8px);
+}
+
+/* BASIC — yellow */
+.tier-basic {
+  background: linear-gradient(145deg, #0F0C00, #1A1500);
+  border: 1px solid rgba(245,200,66,0.3);
+  box-shadow: 0 0 40px rgba(245,200,66,0.08);
+}
+.tier-basic:hover {
+  box-shadow: 0 20px 60px rgba(245,200,66,0.22);
+}
+.tier-basic::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background: linear-gradient(90deg, #7A5C00, #F5C842, #C9960A, #F5C842, #7A5C00);
+}
+
+/* PREMIUM — red */
+.tier-premium {
+  background: linear-gradient(145deg, #0F0000, #1A0000);
+  border: 1px solid rgba(229,57,53,0.35);
+  box-shadow: 0 0 60px rgba(229,57,53,0.12);
+  transform: translateY(-12px);
+}
+.tier-premium:hover {
+  transform: translateY(-20px);
+  box-shadow: 0 30px 80px rgba(229,57,53,0.28);
+}
+.tier-premium::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background: linear-gradient(90deg, #7B0000, #FF6B6B, #E53935, #FF6B6B, #7B0000);
+}
+
+/* VIP — royal blue */
+.tier-vip {
+  background: linear-gradient(145deg, #000814, #001830);
+  border: 1px solid rgba(66,165,245,0.3);
+  box-shadow: 0 0 40px rgba(21,101,192,0.1);
+}
+.tier-vip:hover {
+  box-shadow: 0 20px 60px rgba(66,165,245,0.22);
+}
+.tier-vip::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background: linear-gradient(90deg, #0D3A7A, #42A5F5, #1565C0, #42A5F5, #0D3A7A);
+}
+
+/* ── POPULAR BADGE ─────────────────────────────────────────────────────── */
+.popular-badge {
+  position: absolute;
+  top: -1px;
+  right: 28px;
+  background: linear-gradient(90deg, var(--gold-d), var(--gold-l));
+  color: #0a0800;
+  font-family: 'Syne', sans-serif;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  padding: 6px 16px 5px;
+  border-radius: 0 0 10px 10px;
+  text-transform: uppercase;
+}
+
+/* ── CARD CONTENT ──────────────────────────────────────────────────────── */
+.tier-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.basic-color  { color: var(--yellow); }
+.premium-color{ color: var(--red-l); }
+.vip-color    { color: var(--blue-l); }
+
+.tier-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.tier-tagline {
+  font-size: 13px;
+  color: var(--lgray);
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+/* Chapter count badge */
+.chapter-badge {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+.tier-basic   .chapter-badge { background: rgba(245,200,66,0.07); border: 1px solid rgba(245,200,66,0.2); }
+.tier-premium .chapter-badge { background: rgba(229,57,53,0.07); border: 1px solid rgba(229,57,53,0.2); }
+.tier-vip     .chapter-badge { background: rgba(66,165,245,0.07); border: 1px solid rgba(66,165,245,0.15); }
+
+.chapter-count {
+  font-family: 'Syne', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1;
+}
+.tier-basic   .chapter-count { color: var(--yellow); }
+.tier-premium .chapter-count { color: var(--red-l); }
+.tier-vip     .chapter-count { color: var(--blue-l); }
+
+.chapter-info small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--lgray);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.chapter-info strong {
+  font-size: 13px;
+  color: var(--white);
+  font-weight: 500;
+}
+
+/* Stars */
+.stars {
+  font-size: 16px;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+.tier-basic   .stars { color: var(--yellow); }
+.tier-premium .stars { color: var(--red-l); }
+.tier-vip     .stars { color: var(--blue-l); }
+
+/* Chapter list */
+.chapter-list {
+  list-style: none;
+  margin-bottom: 28px;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+.chapter-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  line-height: 1.5;
+}
+
+.chapter-list li:last-child { border-bottom: none; }
+
+.ch-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.tier-basic   .ch-dot { background: var(--yellow); }
+.tier-premium .ch-dot { background: var(--red); }
+.tier-vip     .ch-dot { background: var(--blue-l); }
+
+/* Divider */
+.card-divider {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 24px;
+}
+
+/* ── CTA BUTTONS ───────────────────────────────────────────────────────── */
+.cta-btn {
+  display: block;
+  width: 100%;
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: none;
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.cta-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0);
+  transition: background 0.2s;
+}
+.cta-btn:hover::after { background: rgba(255,255,255,0.08); }
+
+/* Basic button — yellow */
+.btn-basic {
+  background: linear-gradient(135deg, #7A5C00, #C9960A, #F5C842);
+  color: #0F0C00;
+  box-shadow: 0 4px 20px rgba(245,200,66,0.3);
+}
+.btn-basic:hover {
+  box-shadow: 0 8px 32px rgba(245,200,66,0.5);
+  transform: translateY(-2px);
+}
+
+/* Premium button — red */
+.btn-premium {
+  background: linear-gradient(135deg, #7B0000, #C62828, #E53935, #FF6B6B);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(229,57,53,0.3);
+}
+.btn-premium:hover {
+  box-shadow: 0 8px 32px rgba(229,57,53,0.5);
+  transform: translateY(-2px);
+}
+
+/* VIP button — blue */
+.btn-vip {
+  background: linear-gradient(135deg, #0D3A7A, #1565C0, #1E88E5, #42A5F5);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(21,101,192,0.3);
+}
+.btn-vip:hover {
+  box-shadow: 0 8px 32px rgba(21,101,192,0.5);
+  transform: translateY(-2px);
+}
+
+/* Secondary link button */
+.cta-link {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: var(--lgray);
+  text-decoration: none;
+  padding: 6px;
+  transition: color 0.2s;
+}
+.cta-link:hover { color: var(--white); }
+
+/* Guarantee text */
+.guarantee {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--lgray);
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+.guarantee-icon { font-size: 16px; }
+
+/* ── COMPARISON TABLE ──────────────────────────────────────────────────── */
+.compare {
+  padding: 80px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.compare-table {
+  max-width: 860px;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.compare-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+
+.compare-row:last-child { border-bottom: none; }
+
+.compare-row.header {
+  background: rgba(255,255,255,0.03);
+}
+
+.compare-cell {
+  padding: 16px 20px;
+  font-size: 13px;
+  color: var(--gray);
+  display: flex;
+  align-items: center;
+}
+
+.compare-row.header .compare-cell {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.compare-row.header .compare-cell:nth-child(2) { color: var(--cyan); }
+.compare-row.header .compare-cell:nth-child(3) { color: var(--gold); }
+.compare-row.header .compare-cell:nth-child(4) { color: var(--purple); }
+
+.compare-cell.feature { color: rgba(255,255,255,0.8); }
+.tick { font-size: 16px; }
+.tick.yes-c  { color: var(--cyan); }
+.tick.yes-g  { color: var(--gold); }
+.tick.yes-p  { color: var(--purple); }
+.tick.no     { color: var(--lgray); opacity: 0.4; }
+
+/* ── URGENCY BANNER ────────────────────────────────────────────────────── */
+.urgency-banner {
+  margin: 0 24px;
+  border-radius: 16px;
+  padding: 28px 36px;
+  background: linear-gradient(90deg, rgba(212,168,67,0.12), rgba(212,168,67,0.06), rgba(212,168,67,0.12));
+  border: 1px solid rgba(212,168,67,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.urgency-banner .left h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.urgency-banner .left p {
+  font-size: 14px;
+  color: var(--gray);
+}
+
+.urgency-banner .left p strong { color: var(--gold); }
+
+/* ── TESTIMONIAL ───────────────────────────────────────────────────────── */
+.testimonials {
+  padding: 80px 24px;
+}
+
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.testi-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+}
+
+.testi-stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 14px; }
+
+.testi-card p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 18px;
+}
+
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testi-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.testi-name { font-size: 13px; font-weight: 600; color: var(--white); }
+.testi-loc  { font-size: 11px; color: var(--lgray); }
+
+/* ── FOOTER ────────────────────────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 48px 24px;
+  text-align: center;
+}
+
+footer p {
+  font-size: 13px;
+  color: var(--lgray);
+  margin-bottom: 8px;
+}
+
+footer .author-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+
+footer .footer-links {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+footer .footer-links a {
+  font-size: 12px;
+  color: var(--lgray);
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+}
+
+footer .footer-links a:hover { color: var(--gold); }
+
+/* ── ANIMATIONS ────────────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity:0; transform: translateY(24px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(10px); }
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero-stats { gap: 24px; flex-wrap: wrap; justify-content: center; }
+  .tier-premium { transform: none; }
+  .tier-premium:hover { transform: translateY(-8px); }
+  .compare-row { grid-template-columns: 1.5fr 1fr 1fr 1fr; }
+  .compare-cell { padding: 12px 10px; font-size: 11px; }
+  .urgency-banner { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .hero { padding: 100px 16px 60px; }
+  .tier-grid { grid-template-columns: 1fr; }
+  .compare-row { grid-template-columns: 1.2fr 1fr 1fr 1fr; }
+  .compare-cell { padding: 10px 8px; font-size: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── HERO ──────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="aurora aurora-1"></div>
+  <div class="aurora aurora-2"></div>
+  <div class="aurora aurora-3"></div>
+
+  <p class="hero-eyebrow">By Leonard Nvene  ·  2026 Edition  ·  For Nigerian & African Entrepreneurs</p>
+
+  <h1>
+    <span class="line-white">AI FOR</span>
+    <span class="line-gold">AFRICAN</span>
+    <span class="line-cyan">BUSINESS</span>
+  </h1>
+
+  <p class="hero-sub">
+    The complete step-by-step guide to using Artificial Intelligence to grow, automate and scale your business — built specifically for Nigeria and Africa.
+  </p>
+
+  <div class="hero-slogan">
+    <p>"The business owners who benefit most from AI are not the ones with the biggest budgets — they are the ones who <strong>start before they feel ready.</strong>"</p>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">8<span>+</span></div>
+      <div class="stat-label">Chapters</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">274</div>
+      <div class="stat-label">Pages</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">60<span>+</span></div>
+      <div class="stat-label">AI Tools</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Editions</div>
+    </div>
+  </div>
+
+  <div class="hero-arrow">↓</div>
+</section>
+
+
+<!-- ── WHAT YOU GET ───────────────────────────────────────────────────────── -->
+<div class="features-strip">
+  <p class="section-label">What's Inside</p>
+  <h2 class="section-title" style="margin-bottom:48px;">Everything You Need to Automate<br>Your Business with AI</h2>
+  <div class="features-grid">
+    <div class="feature-item">
+      <div class="feature-icon">🤖</div>
+      <h4>60+ Verified AI Tools</h4>
+      <p>Every tool researched and priced as of March 2026. No outdated information.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">📋</div>
+      <h4>14 Copy-Paste Templates</h4>
+      <p>ChatGPT prompts for every business task — ready to use in seconds.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">📅</div>
+      <h4>30-Day Action Plan</h4>
+      <p>Day-by-day tasks that take your business from zero AI to fully automated.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">🇳🇬</div>
+      <h4>Built for Nigeria & Africa</h4>
+      <p>Paystack, Selar, Tyms, Flutterwave — tools that actually work for you.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">💰</div>
+      <h4>Free AI Tools First</h4>
+      <p>Start with ₦0. Every chapter shows you the free plan before any paid upgrade.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">📂</div>
+      <h4>Resource Directory</h4>
+      <p>Nigerian freelancers, YouTube channels, communities & quick-reference cards.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ── PRICING / CTA BOXES ───────────────────────────────────────────────── -->
+<section class="pricing">
+  <p class="section-label">Choose Your Edition</p>
+  <h2 class="section-title">One Book. Three Levels.<br>You Pick Where to Start.</h2>
+  <p class="section-desc">
+    Same author. Same quality. Pick the edition that matches where you are in your business right now. You can always upgrade later.
+  </p>
+
+  <div class="tier-grid">
+
+    <!-- ═══════════════ BASIC ═══════════════ -->
+    <div class="tier-card tier-basic">
+      <div class="tier-tag basic-color">Basic Edition</div>
+      <div class="tier-name">Starter Pack</div>
+      <div class="tier-tagline">Essential chapters to get you started immediately</div>
+
+      <div class="chapter-badge">
+        <div class="chapter-count">3</div>
+        <div class="chapter-info">
+          <small>Chapters</small>
+          <strong>Core Foundation</strong>
+        </div>
+      </div>
+
+      <div class="stars">★★☆☆☆</div>
+
+      <ul class="chapter-list">
+        <li><span class="ch-dot"></span>Chapter 1 — Why 2026 Is the Year for AI in Africa</li>
+        <li><span class="ch-dot"></span>Chapter 2 — 20 Free AI Tools for African Entrepreneurs</li>
+        <li><span class="ch-dot"></span>Chapter 7 — Your 30-Day AI Automation Action Plan</li>
+      </ul>
+
+      <div class="card-divider"></div>
+
+      <!-- ✅ REPLACE THIS HREF WITH YOUR SELAR BASIC PRODUCT LINK -->
+      <a href="https://selar.com/15iz97d130" target="_blank" class="cta-btn btn-basic">
+        GET BASIC EDITION →
+      </a>
+      <a href="https://selar.com/15iz97d130" target="_blank" class="cta-link">
+        Secure checkout via Selar.co
+      </a>
+
+      <div class="guarantee">
+        <span class="guarantee-icon">🔒</span>
+        <span>Instant delivery after payment. Naira payments accepted.</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════ PREMIUM ═══════════════ -->
+    <div class="tier-card tier-premium">
+      <span class="popular-badge">⭐ MOST POPULAR</span>
+      <div class="tier-tag premium-color">Premium Edition</div>
+      <div class="tier-name">Business Builder</div>
+      <div class="tier-tagline">Advanced strategies to grow your business with AI</div>
+
+      <div class="chapter-badge">
+        <div class="chapter-count">5</div>
+        <div class="chapter-info">
+          <small>Chapters</small>
+          <strong>Advanced Growth</strong>
+        </div>
+      </div>
+
+      <div class="stars">★★★★☆</div>
+
+      <ul class="chapter-list">
+        <li><span class="ch-dot"></span>Chapter 1 — Why 2026 Is the Year for AI in Africa</li>
+        <li><span class="ch-dot"></span>Chapter 2 — 20 Free AI Tools for African Entrepreneurs</li>
+        <li><span class="ch-dot"></span>Chapter 3 — Setting Up AI Chatbots for Your Business</li>
+        <li><span class="ch-dot"></span>Chapter 4 — Marketing Automation with AI</li>
+        <li><span class="ch-dot"></span>Chapter 7 — Your 30-Day AI Automation Action Plan</li>
+      </ul>
+
+      <div class="card-divider"></div>
+
+      <!-- ✅ REPLACE THIS HREF WITH YOUR SELAR PREMIUM PRODUCT LINK -->
+      <a href="https://selar.com/0z61713776" target="_blank" class="cta-btn btn-premium">
+        GET PREMIUM EDITION →
+      </a>
+      <a href="https://selar.com/0z61713776" target="_blank" class="cta-link">
+        Secure checkout via Selar.co
+      </a>
+
+      <div class="guarantee">
+        <span class="guarantee-icon">🔒</span>
+        <span>Instant delivery after payment. Naira payments accepted.</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════ VIP ═══════════════ -->
+    <div class="tier-card tier-vip">
+      <div class="tier-tag vip-color">VIP Edition</div>
+      <div class="tier-name">Complete Masterclass</div>
+      <div class="tier-tagline">Every chapter, every tool, every strategy</div>
+
+      <div class="chapter-badge">
+        <div class="chapter-count">8</div>
+        <div class="chapter-info">
+          <small>All Chapters</small>
+          <strong>Nothing Left Out</strong>
+        </div>
+      </div>
+
+      <div class="stars">★★★★★</div>
+
+      <ul class="chapter-list">
+        <li><span class="ch-dot"></span>Chapter 1 — Why 2026 Is the Year for AI in Africa</li>
+        <li><span class="ch-dot"></span>Chapter 2 — 20 Free AI Tools for African Entrepreneurs</li>
+        <li><span class="ch-dot"></span>Chapter 3 — Setting Up AI Chatbots for Your Business</li>
+        <li><span class="ch-dot"></span>Chapter 4 — Marketing Automation with AI</li>
+        <li><span class="ch-dot"></span>Chapter 5 — AI Finance & Accounting for Nigerian Businesses</li>
+        <li><span class="ch-dot"></span>Chapter 6 — How to Use AI to Create & Sell Digital Products</li>
+        <li><span class="ch-dot"></span>Chapter 7 — Your 30-Day AI Automation Action Plan</li>
+        <li><span class="ch-dot"></span>Chapter 8 — The Complete AI Resource Directory</li>
+      </ul>
+
+      <div class="card-divider"></div>
+
+      <!-- ✅ REPLACE THIS HREF WITH YOUR SELAR VIP PRODUCT LINK -->
+      <a href="https://selar.com/33n2332vr7" target="_blank" class="cta-btn btn-vip">
+        GET VIP EDITION →
+      </a>
+      <a href="https://selar.com/33n2332vr7" target="_blank" class="cta-link">
+        Secure checkout via Selar.co
+      </a>
+
+      <div class="guarantee">
+        <span class="guarantee-icon">🔒</span>
+        <span>Instant delivery after payment. Naira payments accepted.</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ── COMPARISON TABLE ───────────────────────────────────────────────────── -->
+<section class="compare">
+  <p class="section-label">Side by Side</p>
+  <h2 class="section-title" style="margin-bottom:40px;">What Each Edition Includes</h2>
+
+  <div class="compare-table">
+    <div class="compare-row header">
+      <div class="compare-cell">What You Get</div>
+      <div class="compare-cell">BASIC</div>
+      <div class="compare-cell">PREMIUM</div>
+      <div class="compare-cell">VIP</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Why AI in Africa (Ch.1)</div>
+      <div class="compare-cell"><span class="tick yes-c">✓</span></div>
+      <div class="compare-cell"><span class="tick yes-g">✓</span></div>
+      <div class="compare-cell"><span class="tick yes-p">✓</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">20 Free AI Tools (Ch.2)</div>
+      <div class="compare-cell"><span class="tick yes-c">✓</span></div>
+      <div class="compare-cell"><span class="tick yes-g">✓</span></div>
+      <div class="compare-cell"><span class="tick yes-p">✓</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">AI Chatbots Setup (Ch.3)</div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick yes-g">✓</span></div>
+      <div class="compare-cell"><span class="tick yes-p">✓</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Marketing Automation (Ch.4)</div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick yes-g">✓</span></div>
+      <div class="compare-cell"><span class="tick yes-p">✓</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">AI Finance & Accounting (Ch.5)</div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick yes-p">✓</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Create & Sell Digital Products (Ch.6)</div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick yes-p">✓</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">30-Day Action Plan (Ch.7)</div>
+      <div class="compare-cell"><span class="tick yes-c">✓</span></div>
+      <div class="compare-cell"><span class="tick yes-g">✓</span></div>
+      <div class="compare-cell"><span class="tick yes-p">✓</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Complete Resource Directory (Ch.8)</div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick yes-p">✓</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">60+ AI Tools Directory</div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick yes-p">✓</span></div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">14 Copy-Paste Templates</div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick no">✕</span></div>
+      <div class="compare-cell"><span class="tick yes-p">✓</span></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── URGENCY BANNER ─────────────────────────────────────────────────────── -->
+<div class="urgency-banner">
+  <div class="left">
+    <h3>🇳🇬 Built Specifically for Nigerian Entrepreneurs</h3>
+    <p>Every tool, every price, every example is verified for <strong>March 2026</strong>. No generic Western advice. This is for <strong>your</strong> market.</p>
+  </div>
+  <!-- ✅ REPLACE HREF WITH YOUR BEST/MOST POPULAR SELAR LINK -->
+      <a href="https://selar.com/0z61713776" target="_blank" class="cta-btn btn-premium" style="width:auto; padding:16px 32px; white-space:nowrap;">
+    START READING TODAY →
+  </a>
+</div>
+
+
+<!-- ── TESTIMONIALS ───────────────────────────────────────────────────────── -->
+<section class="testimonials">
+  <p class="section-label">Reader Results</p>
+  <h2 class="section-title" style="margin-bottom:48px;">What Business Owners Are Saying</h2>
+
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p>"I set up my WhatsApp chatbot in one afternoon using Chapter 3. My customers now get replies at 2am when I'm asleep. Sales increased by 40% in the first month."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#00AACC,#00D4FF);">C</div>
+        <div>
+          <div class="testi-name">Chioma Okafor</div>
+          <div class="testi-loc">Fashion Business, Lagos</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p>"Chapter 5 alone saved me ₦60,000 I was paying my accountant. Wave now does everything automatically. This book paid for itself in week one."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#D4A843,#8B6914);">E</div>
+        <div>
+          <div class="testi-name">Emmanuel Adeyemi</div>
+          <div class="testi-loc">Food Business, Abuja</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p>"I launched my first digital product on Selar using Chapter 6. Made ₦187,000 in the first two weeks. The templates did all the heavy lifting."</p>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#A855F7,#6C3483);">A</div>
+        <div>
+          <div class="testi-name">Amaka Nwosu</div>
+          <div class="testi-loc">Digital Creator, Port Harcourt</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ── FOOTER ─────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="author-name">LEONARD NVENE</div>
+  <p>AI For African Business  ·  2026 Edition</p>
+  <p style="margin-top:8px; font-size:12px;">All payments processed securely through Selar.co · Instant digital delivery · Naira accepted</p>
+  <div class="footer-links">
+    <a href="https://selar.com/15iz97d130" target="_blank">Basic Edition</a>
+    <a href="https://selar.com/0z61713776" target="_blank">Premium Edition</a>
+    <a href="https://selar.com/33n2332vr7" target="_blank">VIP Edition</a>
+  </div>
+</footer>
+
+</body>
+</html>
